@@ -73,6 +73,11 @@ public class Game : MonoBehaviour
         CheckUserInput();
     }
 
+    /// <summary>
+    /// Verifica daca tetramino a trecut de limita superioara a grid ului.
+    /// </summary>
+    /// <param name="tetromino"></param>
+    /// <returns>True daca s a depasit inaltimea grud ului, false altfel.</returns>
     public bool CheckIsAboveGrid(Tetromino tetromino)
     {
         foreach (Transform mino in tetromino.transform)
@@ -86,6 +91,9 @@ public class Game : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Sterge liniile pline.
+    /// </summary>
     public void DeleteRow()
     {
         for (int i = 0; i < gridHight; i++)
@@ -99,6 +107,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Actualizeaza grid ul.
+    /// </summary>
+    /// <param name="tetromino"></param>
     public void UpdateGrid(Tetromino tetromino)
     {
         for (int y = 0; y < gridHight; y++)
@@ -125,6 +137,11 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returneaza pozitia unui mino in interiorul grid ului, daca se gaseste.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns>Pozitia actuala a mino ului, altfel null.</returns>
     public Transform GetTransformAtGridPosition(Vector2 pos)
     {
         if (pos.y > gridHight - 1)
@@ -137,6 +154,9 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Genereaza un nou tetramino.
+    /// </summary>
     public void SpawnNextTetromino()     //spawn-to cause something new, or many new things, to grow or start suddenly
     {
         if (!gameStarted)
@@ -159,16 +179,29 @@ public class Game : MonoBehaviour
         currentSwaps = 0;
     }
 
+    /// <summary>
+    /// Verifica dac atetramino ul activ este in interiorul grid ului.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns>True daca este in interiorul grid ului, false altfel.</returns>
     public bool CheckIsInsideGrid(Vector2 pos)
     {
         return ((int)pos.x >= 0 && (int)pos.x < gridWidth && (int)pos.y >= 0);
     }
 
+    /// <summary>
+    /// Rotunjeste pozitia unui mino.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns>Poziti rotunjita a mino ului.</returns>
     public Vector2 Round(Vector2 pos)
     {
         return new Vector2(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));  //Mathf.Round -rotunjeste valorile, de ex 10.5 la 11, 10.2 la 10 / Mathf.FloorToInnt le rotunjeste in jos
     }
 
+    /// <summary>
+    ///Pune jocul pe pauza sau iese din pauza, permite salvare unui tetramino si reutilizarea lui cand este cazul.
+    /// </summary>
     private void CheckUserInput()
     {
         if (Input.GetKeyUp(KeyCode.P))
@@ -190,6 +223,9 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Pune jocul pe pauza.
+    /// </summary>
     private void PauseGame()
     {
         Time.timeScale = 0;
@@ -200,6 +236,9 @@ public class Game : MonoBehaviour
         pause_canvas.enabled = true;
     }
 
+    /// <summary>
+    /// Continua jocul dupa pauza.
+    /// </summary>
     private void ResumeGame()
     {
         Time.timeScale = 1;
@@ -210,6 +249,9 @@ public class Game : MonoBehaviour
         pause_canvas.enabled = false;
     }
 
+    /// <summary>
+    /// Actualizeaza level ul lacare este jucatorul.
+    /// </summary>
     private void UpdateLevel()
     {
         if (startingLevelZero || (startingLevelZero == false && numLineCleared / 10 > startingLevel))
@@ -218,11 +260,17 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Actualizeaza viteza cu care cade tetramino in functie de nivelul la care se afla jucatorul.
+    /// </summary>
     private void UpdateSpeed()
     {
         fallSpeed = 1.0f - ((float)currentLevel * 0.1f);
     }
 
+    /// <summary>
+    /// Actualizeaza interfata pe care o vede jucatorul cu scorul, nivelul si liniile curatate de el.
+    /// </summary>
     private void UpdateUI()
     {
         hud_score.text = currentScore.ToString();
@@ -230,6 +278,9 @@ public class Game : MonoBehaviour
         hud_lines.text = numLineCleared.ToString();
     }
 
+    /// <summary>
+    /// Actualizeaza scorul in functie de numarul de linii curatate.
+    /// </summary>
     private void UpdateScore()
     {
         if (numberOfRowsThisTurn > 0)
@@ -241,6 +292,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creste scorul curent in functie de numarul de linii curatate.
+    /// </summary>
+    /// <param name="numberOfRows"></param>
     private void ClearedRows(int numberOfRows)
     {
         switch (numberOfRows)
@@ -264,6 +319,9 @@ public class Game : MonoBehaviour
         numLineCleared += numberOfRows;
     }
 
+    /// <summary>
+    /// Verifica daca scorul de la finalul jocului este in top 3 si actualizeaza topul.
+    /// </summary>
     private void UpdateHighScore()
     {
         if (currentScore > startingHighScore)
@@ -284,6 +342,11 @@ public class Game : MonoBehaviour
         PlayerPrefs.SetInt("lastscore", currentScore);
     }
 
+    /// <summary>
+    /// Verifica daca tetramino este intr o pozitie valida.
+    /// </summary>
+    /// <param name="tetromino"></param>
+    /// <returns>True daca pozitia este valida, false altfel.</returns>
     public bool CheckIsValidPosition(GameObject tetromino)
     {
         foreach (Transform mino in tetromino.transform)
@@ -301,6 +364,11 @@ public class Game : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Verifica daca o linie este plina.
+    /// </summary>
+    /// <param name="y"></param>
+    /// <returns>True daca linia este plina, false altfel.</returns>
     private bool IsFullRowAt(int y)
     {
         for (int x = 0; x < gridWidth; x++)
@@ -314,6 +382,10 @@ public class Game : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Sterge un mino.
+    /// </summary>
+    /// <param name="y"></param>
     private void DeleteMinoAt(int y)
     {
         for (int x = 0; x < gridWidth; x++)
@@ -323,6 +395,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Verifica pentru o linie daca are spatii goale, daca est ecazul le umple.
+    /// </summary>
+    /// <param name="y"></param>
     private void MoveRowDown(int y)
     {
         for (int x = 0; x < gridWidth; x++)
@@ -336,6 +412,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Verifica pentru fiecare linie daca are spatii goale, daca est ecazul le umple.
+    /// </summary>
+    /// <param name="y"></param>
     private void MoveAllRowsDown(int y)
     {
         for (int i = y; i < gridHight; ++i)
@@ -344,6 +424,9 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creaza un nou ghost pentru tetramino ul activ.
+    /// </summary>
     private void SpawnGhostTetromino()
     {
         if (GameObject.FindGameObjectWithTag("currentGhostTetromino") != null)
@@ -355,6 +438,10 @@ public class Game : MonoBehaviour
         ghostTetromino.AddComponent<GhostTetromino>();
     }
 
+    /// <summary>
+    /// Salveaza tetremino ul activ pentru a il folosi mai tarziu, iar tetramino ul salvat este folosit in locul tetremino ului activ.
+    /// </summary>
+    /// <param name="t"></param>
     private void SaveTetromino(Transform t)
     {
         currentSwaps++;
@@ -403,6 +490,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Genereaza un tetremino random.
+    /// </summary>
+    /// <returns>Numele unui tetramino</returns>
     private string GetRandomTetromino()
     {
         int randomTetromino = UnityEngine.Random.Range(1, 8);
@@ -441,6 +532,9 @@ public class Game : MonoBehaviour
         return randomTetrominoName;
     }
 
+    /// <summary>
+    /// Incheie jocul.
+    /// </summary>
     public void GameOver()
     {
         UpdateHighScore();

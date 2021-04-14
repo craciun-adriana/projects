@@ -39,17 +39,26 @@ public class GameMenu : MonoBehaviour
     }
 
     //apelam de la buton
+    /// <summary>
+    /// incepe jocul in momentul in care se apasa pe butonul la care este atasat scriptul.
+    /// </summary>
     public void PlayGame()
     {
         Game.startingLevelZero = (Game.startingLevel == 0);
         Application.LoadLevel("Level");
     }
 
+    /// <summary>
+    /// Se iese din game in momentul in care se apasa pe butonul la care este atasat scriptul.
+    /// </summary>
     public void QuitGame()
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Actualizeaza in UI levelul selectat de utilizator inainte de inceputul jocului.
+    /// </summary>
     public void ChangeValue()
     {
         Game.startingLevel = (int)levelSlider.value;

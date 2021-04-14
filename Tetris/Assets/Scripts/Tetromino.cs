@@ -46,6 +46,9 @@ public class Tetromino : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Actualizeaza viteza cu care va cadea tretramino.
+    /// </summary>
     private void UpdateFallSpeed()
     {
         fallSpeed = Game.fallSpeed;
@@ -53,6 +56,9 @@ public class Tetromino : MonoBehaviour
 
     // Scade scorul cu 10 puncte la fiecare secunda daca tetramino-ul nu a ajuns jos
     // ca sa incurajeze jucatorul sa joace rapid
+    /// <summary>
+    /// Actualizeaza scorul pe care il are un tetramino.
+    /// </summary>
     private void UpdateIndividualScore()
     {
         if (individualScoreTime < 1)
@@ -67,6 +73,9 @@ public class Tetromino : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Controleaza miscarile tetraminoului in functie de tastele apasate de jucator.
+    /// </summary>
     private void CheckUserInput()
     {
         if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
@@ -104,6 +113,9 @@ public class Tetromino : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Pozitioneaza instant tetramino cat mai jos.?
+    /// </summary>
     private void SlamDown()
     {
         while (CheckIsValidPosition())
@@ -132,6 +144,10 @@ public class Tetromino : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Misca tetramino pe axa orizontala (X).
+    /// </summary>
+    /// <param name="direction"></param>
     private void MoveHorizontally(Direction direction)
     {
         if (moveImediateHorizontal)
@@ -166,6 +182,9 @@ public class Tetromino : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Muta tetramino in jos.
+    /// </summary>
     private void MoveDown()
     {
         if (moveImediateVertical)
@@ -216,6 +235,9 @@ public class Tetromino : MonoBehaviour
         fall = Time.time;
     }
 
+    /// <summary>
+    /// Roteste tetramino.
+    /// </summary>
     private void Rotate()
     {
         if (allowRotation)
@@ -248,21 +270,34 @@ public class Tetromino : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Se activeaza muzica pentru a semnala ca tetramino s-a deplasat la stanga, dreapta sau in jos.
+    /// </summary>
     private void PlayMoveAudio()
     {
         audioSource.PlayOneShot(moveSound);  //move right down or left
     }
 
+    /// <summary>
+    /// Se activeaza muzica pentru a semnala ca tetramino s-a rotit.
+    /// </summary>
     private void PlayRotateAudio()
     {
         audioSource.PlayOneShot(rotateSound);
     }
 
+    /// <summary>
+    /// Se activeaza muzica pentru a semnala ca tetramino a ajuns la sol.
+    /// </summary>
     private void PlayLandAudio() //land - a ateriza
     {
         audioSource.PlayOneShot(landSound);
     }
 
+    /// <summary>
+    /// Verifica daca tetramino se afla intr o pozitie valida.
+    /// </summary>
+    /// <returns></returns>
     private bool CheckIsValidPosition()
     {
         return FindObjectOfType<Game>().CheckIsValidPosition(gameObject);

@@ -53,13 +53,14 @@ public class GhostTetromino : MonoBehaviour
     {
         foreach (Transform mino in transform)
         {
-            Vector2 pos = FindObjectOfType<Game>().Round(mino.position);
+            Game game = FindObjectOfType<Game>();
+            Vector2 pos = game.Round(mino.position);
 
-            if (FindObjectOfType<Game>().CheckIsInsideGrid(pos) == false)
+            if (game.CheckIsInsideGrid(pos) == false)
                 return false;
-            if (FindObjectOfType<Game>().GetTransformAtGridPosition(pos) != null && FindObjectOfType<Game>().GetTransformAtGridPosition(pos).parent.CompareTag("currentActivTetromino"))
+            if (game.GetTransformAtGridPosition(pos) != null && game.GetTransformAtGridPosition(pos).parent.CompareTag("currentActivTetromino"))
                 return true;
-            if (FindObjectOfType<Game>().GetTransformAtGridPosition(pos) != null && FindObjectOfType<Game>().GetTransformAtGridPosition(pos).parent != transform)
+            if (game.GetTransformAtGridPosition(pos) != null && game.GetTransformAtGridPosition(pos).parent != transform)
                 return false;
         }
         return true;
